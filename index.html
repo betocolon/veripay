@@ -339,22 +339,21 @@
     </section>
 
     <!-- Login Modal -->
-   <div id="loginModal" class="modal">
+    <div id="loginModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('loginModal')">&times;</span>
             <h2>Iniciar Sesión</h2>
-            <!-- Note the ID added to the form -->
-            <form id="loginForm" onsubmit="return handleLogin(event)">
-                <div class="form-group">
-                    <label>Correo Electrónico</label>
-                    <input type="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label>Contraseña</label>
-                    <input type="password" name="password" required>
-                </div>
-                <button type="submit" class="button">Iniciar Sesión</button>
-            </form>
+            <!-- Important: No form tag, just direct button click -->
+            <div class="form-group">
+                <label>Correo Electrónico</label>
+                <input type="email" id="emailInput">
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" id="passwordInput">
+            </div>
+            <!-- Direct button with simple onclick -->
+            <button class="button" onclick="loginAndRedirect()">Iniciar Sesión</button>
         </div>
     </div>
 
@@ -382,6 +381,7 @@
     </div>
 
 <script>
+        // Modal functions
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
         }
@@ -390,30 +390,25 @@
             document.getElementById(modalId).style.display = 'none';
         }
 
+        // Simple redirect function
+        function loginAndRedirect() {
+            // Basic validation
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+            
+            if (email && password) {
+                // Direct navigation to dashboard
+                document.location.href = './dashboard.html';
+            } else {
+                alert('Por favor completa todos los campos');
+            }
+        }
+
+        // Close modal when clicking outside
         window.onclick = function(event) {
             if (event.target.className === 'modal') {
                 event.target.style.display = 'none';
             }
-        }
-
-        function handleLogin(event) {
-            event.preventDefault(); // Prevent form submission
-            
-            try {
-                // You can add validation here if needed
-                window.location.replace('dashboard.html'); // Using replace instead of href
-                return false; // Prevent form submission
-            } catch (error) {
-                console.error('Navigation error:', error);
-                alert('Error al navegar al dashboard. Por favor, intenta de nuevo.');
-            }
-        }
-
-        function handleRegister(event) {
-            event.preventDefault();
-            alert('¡Registro exitoso! Por favor, inicia sesión.');
-            closeModal('registerModal');
-            openModal('loginModal');
         }
     </script>
 </body>
