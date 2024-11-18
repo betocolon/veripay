@@ -339,18 +339,19 @@
     </section>
 
     <!-- Login Modal -->
-    <div id="loginModal" class="modal">
+   <div id="loginModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('loginModal')">&times;</span>
             <h2>Iniciar Sesión</h2>
-            <form onsubmit="handleLogin(event)">
+            <!-- Note the ID added to the form -->
+            <form id="loginForm" onsubmit="return handleLogin(event)">
                 <div class="form-group">
                     <label>Correo Electrónico</label>
-                    <input type="email" required>
+                    <input type="email" name="email" required>
                 </div>
                 <div class="form-group">
                     <label>Contraseña</label>
-                    <input type="password" required>
+                    <input type="password" name="password" required>
                 </div>
                 <button type="submit" class="button">Iniciar Sesión</button>
             </form>
@@ -380,7 +381,7 @@
         </div>
     </div>
 
-    <script>
+<script>
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
         }
@@ -396,11 +397,16 @@
         }
 
         function handleLogin(event) {
-            event.preventDefault();
-            // For demo purposes, any login will work
-            alert('¡Inicio de sesión exitoso!');
-            // Navigate to dashboard
-            window.location.href = 'dashboard.html';
+            event.preventDefault(); // Prevent form submission
+            
+            try {
+                // You can add validation here if needed
+                window.location.replace('dashboard.html'); // Using replace instead of href
+                return false; // Prevent form submission
+            } catch (error) {
+                console.error('Navigation error:', error);
+                alert('Error al navegar al dashboard. Por favor, intenta de nuevo.');
+            }
         }
 
         function handleRegister(event) {
