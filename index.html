@@ -397,9 +397,10 @@
 
         function handleLogin(event) {
             event.preventDefault();
-            const currentPath = window.location.href;
-            const dashboardPath = currentPath.replace('index.html', 'dashboard.html');
-            window.location.href = dashboardPath;
+            // For demo purposes, any login will work
+            alert('¡Inicio de sesión exitoso!');
+            // Navigate to dashboard
+            window.location.href = 'dashboard.html';
         }
 
         function handleRegister(event) {
