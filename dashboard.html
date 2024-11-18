@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeriPay - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            background-color: #f3f4f6;
+        }
+
+        .navbar {
+            background-color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #059669;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            color: #4b5563;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        .button {
+            background-color: #059669;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #047857;
+        }
+
+        .dashboard {
+            padding: 2rem 1rem;
+        }
+
+        .welcome-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-card h3 {
+            color: #4b5563;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            color: #111827;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .transactions {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .transactions h2 {
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+
+        .transaction-list {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+        }
+
+        .transaction-item {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-completed {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo">VeriPay</a>
+            <div class="nav-links">
+                <button onclick="showNotifications()">🔔 Notificaciones</button>
+                <button onclick="showSettings()">⚙️ Configuración</button>
+                <button onclick="logout()" class="button">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>Bienvenido, Usuario</h1>
+            <p>Aquí puedes gestionar tus transacciones seguras</p>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Balance Disponible</h3>
+                <p>$5,000 MXN</p>
+            </div>
+            <div class="stat-card">
+                <h3>Transacciones Activas</h3>
+                <p>3</p>
+            </div>
+            <div class="stat-card">
+                <h3>Transacciones Completadas</h3>
+                <p>12</p>
+            </div>
+        </div>
+
+        <!-- Transactions Section -->
+        <div class="transactions">
+            <h2>Transacciones Recientes</h2>
+            <div class="transaction-list">
+                <div class="transaction-item">
+                    <div>
+                        <strong>iPhone 13 Pro</strong>
+                        <div>Vendedor: Juan Pérez</div>
+                    </div>
+                    <div>
+                        <div>$15,000 MXN</div>
+                        <span class="status status-pending">Pendiente</span>
+                    </div>
+                </div>
+                <div class="transaction-item">
+                    <div>
+                        <strong>MacBook Air</strong>
+                        <div>Vendedor: María García</div>
+                    </div>
+                    <div>
+                        <div>$25,000 MXN</div>
+                        <span class="status status-completed">Completado</span>
+                    </div>
+                </div>
+                <div class="transaction-item">
+                    <div>
+                        <strong>iPad Mini</strong>
+                        <div>Vendedor: Carlos López</div>
+                    </div>
+                    <div>
+                        <div>$8,000 MXN</div>
+                        <span class="status status-pending">Pendiente</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showNotifications() {
+            alert('No tienes notificaciones nuevas');
+        }
+
+        function showSettings() {
+            alert('Configuración no disponible en este momento');
+        }
+
+        function logout() {
+            if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>
