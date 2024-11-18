@@ -3,354 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VeriPay - Dashboard</title>
-    <!-- Add Google Fonts -->
+    <title>VeriPay - Panel de Control</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'DM Sans', sans-serif;
+        /* ... Previous styles ... */
+        
+        /* Add new styles for the side navigation */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
         }
 
-        body {
-            line-height: 1.6;
-            background-color: #f8fafc;
-            color: #1e293b;
+        .sidebar {
+            width: 250px;
+            background-color: #1a2238;
+            color: white;
+            padding: 2rem 1rem;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
         }
 
-        .navbar {
-            background-color: white;
-            padding: 1.25rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        .sidebar-logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
-        .nav-content {
+        .nav-item {
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            color: #e5e7eb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: #059669;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 2rem;
+            background-color: #f3f4f6;
+        }
+
+        .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 2rem;
         }
 
-        .logo {
-            color: #059669;
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-decoration: none;
+        .user-menu {
+            position: relative;
         }
 
-        .nav-links button {
+        .menu-trigger {
             background: none;
             border: none;
             color: #4b5563;
             cursor: pointer;
-            margin-left: 1.5rem;
-            font-weight: 500;
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 0.75rem;
-            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
         }
 
-        .nav-links button:hover {
-            background-color: #f3f4f6;
+        .menu-trigger:hover {
+            background-color: #e5e7eb;
         }
 
-        .button {
-            background-color: #059669;
-            color: white !important;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(5, 150, 105, 0.1);
-        }
-
-        .button:hover {
-            background-color: #047857;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 6px rgba(5, 150, 105, 0.2);
-        }
-
-        .dashboard {
-            padding: 2rem 1rem;
-        }
-
-        .welcome-section {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
-            padding: 3rem 2rem;
-            border-radius: 1rem;
-            margin-bottom: 2rem;
-            color: white;
-            box-shadow: 0 4px 6px rgba(5, 150, 105, 0.1);
-        }
-
-        .welcome-section h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .welcome-section p {
-            opacity: 0.9;
-        }
-
-        .stats-grid {
+        /* Dashboard specific styles */
+        .quick-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
 
         .stat-card {
             background-color: white;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0,0,0,0.1);
-        }
-
-        .stat-card h3 {
-            color: #4b5563;
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .stat-card p {
-            color: #059669;
-            font-size: 2rem;
-            font-weight: 700;
-        }
-
-        .transactions {
+        .transactions-list {
             background-color: white;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .transactions h2 {
-            margin-bottom: 1.5rem;
-            color: #1e293b;
-            font-size: 1.5rem;
-        }
-
-        .transaction-list {
-            border: 1px solid #e5e7eb;
-            border-radius: 1rem;
-            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .transaction-item {
-            padding: 1.5rem;
-            border-bottom: 1px solid #e5e7eb;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s ease;
-        }
-
-        .transaction-item:hover {
-            background-color: #f8fafc;
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .transaction-item:last-child {
             border-bottom: none;
         }
 
-        .status {
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
             font-size: 0.875rem;
             font-weight: 500;
-            display: inline-flex;
-            align-items: center;
         }
 
-        .status::before {
-            content: "";
-            display: inline-block;
-            width: 0.5rem;
-            height: 0.5rem;
-            border-radius: 50%;
-            margin-right: 0.5rem;
-        }
-
-        .status-pending {
+        .badge-pending {
             background-color: #fef3c7;
             color: #92400e;
         }
 
-        .status-pending::before {
-            background-color: #92400e;
-        }
-
-        .status-completed {
+        .badge-completed {
             background-color: #d1fae5;
             color: #065f46;
         }
 
-        .status-completed::before {
-            background-color: #065f46;
-        }
-
-        .transaction-amount {
-            font-weight: 700;
-            color: #059669;
-            font-size: 1.125rem;
-        }
-
-        /* Add animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animated {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        .transaction-title {
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 0.25rem;
-        }
-
-        .transaction-seller {
-            color: #64748b;
-            font-size: 0.875rem;
-        }
-
-        /* Add quick action buttons */
-        .quick-actions {
+        .action-buttons {
             display: flex;
             gap: 1rem;
             margin-bottom: 2rem;
         }
 
         .action-button {
-            background-color: white;
-            border: 2px solid #e5e7eb;
-            padding: 1rem 2rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 0.75rem;
-            cursor: pointer;
             font-weight: 500;
+            cursor: pointer;
             transition: all 0.3s ease;
-            color: #1e293b;
         }
 
-        .action-button:hover {
-            border-color: #059669;
+        .primary-button {
+            background-color: #059669;
+            color: white;
+            border: none;
+        }
+
+        .secondary-button {
+            background-color: white;
             color: #059669;
-            transform: translateY(-2px);
+            border: 2px solid #059669;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container nav-content">
-            <a href="#" class="logo">VeriPay</a>
-            <div class="nav-links">
-                <button onclick="showNotifications()">🔔 Notificaciones</button>
-                <button onclick="showSettings()">⚙️ Configuración</button>
-                <button onclick="logout()" class="button">Cerrar Sesión</button>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                🔒 VeriPay
             </div>
-        </div>
-    </nav>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item active">
+                    📊 Panel Principal
+                </a>
+                <a href="create-agreement.html" class="nav-item">
+                    ✍️ Crear Acuerdo
+                </a>
+                <a href="active-agreements.html" class="nav-item">
+                    📝 Acuerdos Activos
+                </a>
+                <a href="completed-agreements.html" class="nav-item">
+                    ✅ Acuerdos Completados
+                </a>
+                <a href="deposit-funds.html" class="nav-item">
+                    💰 Depositar Fondos
+                </a>
+            </nav>
+        </aside>
 
-    <!-- Dashboard Content -->
-    <div class="dashboard container">
-        <!-- Welcome Section -->
-        <div class="welcome-section animated">
-            <h1>¡Bienvenido de nuevo, Juan!</h1>
-            <p>Gestiona tus transacciones seguras desde aquí</p>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="quick-actions animated">
-            <button class="action-button">+ Nueva Transacción</button>
-            <button class="action-button">💰 Retirar Fondos</button>
-        </div>
-
-        <!-- Stats Section -->
-        <div class="stats-grid animated">
-            <div class="stat-card">
-                <h3>Balance Disponible</h3>
-                <p>$5,000 MXN</p>
-            </div>
-            <div class="stat-card">
-                <h3>Transacciones Activas</h3>
-                <p>3</p>
-            </div>
-            <div class="stat-card">
-                <h3>Transacciones Completadas</h3>
-                <p>12</p>
-            </div>
-        </div>
-
-        <!-- Transactions Section -->
-        <div class="transactions animated">
-            <h2>Transacciones Recientes</h2>
-            <div class="transaction-list">
-                <div class="transaction-item">
-                    <div>
-                        <div class="transaction-title">iPhone 13 Pro</div>
-                        <div class="transaction-seller">Vendedor: Juan Pérez</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div class="transaction-amount">$15,000 MXN</div>
-                        <span class="status status-pending">Pendiente</span>
-                    </div>
-                </div>
-                <div class="transaction-item">
-                    <div>
-                        <div class="transaction-title">MacBook Air</div>
-                        <div class="transaction-seller">Vendedor: María García</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div class="transaction-amount">$25,000 MXN</div>
-                        <span class="status status-completed">Completado</span>
-                    </div>
-                </div>
-                <div class="transaction-item">
-                    <div>
-                        <div class="transaction-title">iPad Mini</div>
-                        <div class="transaction-seller">Vendedor: Carlos López</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div class="transaction-amount">$8,000 MXN</div>
-                        <span class="status status-pending">Pendiente</span>
-                    </div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Panel de Control</h1>
+                <div class="user-menu">
+                    <button class="menu-trigger" onclick="handleLogout()">
+                        👤 Juan Pérez
+                    </button>
                 </div>
             </div>
-        </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-button primary-button" onclick="window.location.href='create-agreement.html'">
+                    + Nueva Transacción
+                </button>
+                <button class="action-button secondary-button" onclick="window.location.href='deposit-funds.html'">
+                    💰 Depositar Fondos
+                </button>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <h3>Balance Disponible</h3>
+                    <p class="stat-value">$5,000 MXN</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Transacciones Activas</h3>
+                    <p class="stat-value">3</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Transacciones Completadas</h3>
+                    <p class="stat-value">12</p>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="transactions-list">
+                <h2>Transacciones Recientes</h2>
+                <div class="transaction-item">
+                    <div>
+                        <strong>iPhone 13 Pro</strong>
+                        <div>Vendedor: Juan Pérez</div>
+                    </div>
+                    <div>
+                        <div>$15,000 MXN</div>
+                        <span class="badge badge-pending">Pendiente</span>
+                    </div>
+                </div>
+                <!-- Add more transaction items as needed -->
+            </div>
+        </main>
     </div>
 
     <script>
-        function showNotifications() {
-            alert('No tienes notificaciones nuevas');
-        }
-
-        function showSettings() {
-            alert('Configuración no disponible en este momento');
-        }
-
-        function logout() {
+        function handleLogout() {
             if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
                 window.location.href = 'index.html';
             }
