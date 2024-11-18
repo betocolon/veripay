@@ -4,24 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VeriPay - Panel de Control</title>
-    <!-- Using the exact fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"> 
+    <!-- Modern fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        body {
             font-family: 'DM Sans', sans-serif;
-            background-color: #f8fafc;
-            color: #1a2238;
-        }
-
-        h1, h2, h3 {
-            font-family: 'Libre Caslon Text', serif;
-            font-weight: 700;
         }
 
         .dashboard-container {
@@ -32,6 +22,7 @@
         .sidebar {
             width: 250px;
             background-color: #1a2238;
+            color: white;
             padding: 1.5rem;
             position: fixed;
             height: 100vh;
@@ -40,44 +31,60 @@
         }
 
         .sidebar-logo {
-            color: white;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 2.5rem;
+            color: white;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
             padding: 0.75rem 1rem;
-            color: white;
+            color: #e5e7eb;
             text-decoration: none;
             border-radius: 0.5rem;
             margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
 
         .nav-item.active {
             background-color: #059669;
+            color: white;
+        }
+
+        .nav-item:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .main-content {
             flex: 1;
             margin-left: 250px;
             padding: 2rem;
+            background-color: #f8fafc;
         }
 
-        .page-header {
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 2rem;
         }
 
-        .page-header h1 {
+        .page-title {
             font-size: 2rem;
+            font-weight: bold;
             color: #1a2238;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #4b5563;
         }
 
         .action-buttons {
@@ -87,29 +94,28 @@
         }
 
         .btn {
+            display: inline-flex;
+            align-items: center;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
             font-weight: 500;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            border: none;
-            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s ease;
         }
 
         .btn-primary {
             background-color: #059669;
             color: white;
+            border: none;
         }
 
         .btn-outline {
-            background-color: transparent;
-            border: 1px solid #059669;
+            background-color: white;
             color: #059669;
+            border: 1px solid #059669;
         }
 
-        .stats-container {
+        .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
@@ -120,69 +126,73 @@
             background: white;
             padding: 1.5rem;
             border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .stat-card h3 {
-            font-size: 1.1rem;
+            font-size: 1rem;
+            color: #4b5563;
             margin-bottom: 0.5rem;
-            color: #1a2238;
         }
 
         .stat-value {
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: bold;
             color: #059669;
         }
 
-        .transactions-section {
+        .transactions-container {
             background: white;
             padding: 1.5rem;
             border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
-        .transactions-section h2 {
+        .transactions-header {
+            font-size: 1.25rem;
+            font-weight: bold;
             margin-bottom: 1.5rem;
-            font-size: 1.3rem;
+            color: #1a2238;
         }
 
         .transaction-item {
-            padding: 1rem 0;
-            border-bottom: 1px solid #e5e7eb;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .transaction-item:last-child {
             border-bottom: none;
         }
 
-        .transaction-info h4 {
-            font-family: 'Libre Caslon Text', serif;
-            font-size: 1.1rem;
+        .transaction-info {
+            flex: 1;
+        }
+
+        .transaction-title {
+            font-weight: bold;
+            color: #1a2238;
             margin-bottom: 0.25rem;
         }
 
-        .transaction-info p {
+        .transaction-seller {
             color: #6b7280;
-            font-size: 0.9rem;
-        }
-
-        .transaction-status {
-            text-align: right;
+            font-size: 0.875rem;
         }
 
         .transaction-amount {
-            font-weight: 500;
-            font-size: 1.1rem;
+            font-weight: bold;
+            color: #059669;
+            text-align: right;
             margin-bottom: 0.25rem;
         }
 
-        .status-badge {
-            display: inline-block;
+        .transaction-status {
             padding: 0.25rem 0.75rem;
             border-radius: 1rem;
-            font-size: 0.8rem;
+            font-size: 0.875rem;
             font-weight: 500;
         }
 
@@ -195,7 +205,7 @@
             background-color: #f0fdf4;
             color: #166534;
         }
-
+        
         .status-cancelled {
             background-color: #fef2f2;
             color: #991b1b;
@@ -218,8 +228,11 @@
         </aside>
 
         <main class="main-content">
-            <div class="page-header">
-                <h1>Panel de Control</h1>
+            <div class="header-container">
+                <h1 class="page-title">Panel de Control</h1>
+                <div class="user-profile">
+                    👤 Juan Pérez
+                </div>
             </div>
 
             <div class="action-buttons">
@@ -227,65 +240,64 @@
                 <button class="btn btn-outline">💰 Depositar Fondos</button>
             </div>
 
-            <div class="stats-container">
+            <div class="stats-grid">
                 <div class="stat-card">
                     <h3>Balance Disponible</h3>
-                    <p class="stat-value">$5,000 MXN</p>
+                    <div class="stat-value">$5,000 MXN</div>
                 </div>
                 <div class="stat-card">
                     <h3>Transacciones Activas</h3>
-                    <p class="stat-value">3</p>
+                    <div class="stat-value">3</div>
                 </div>
                 <div class="stat-card">
                     <h3>Transacciones Completadas</h3>
-                    <p class="stat-value">12</p>
+                    <div class="stat-value">12</div>
                 </div>
             </div>
 
-            <div class="transactions-section">
-                <h2>Transacciones Recientes</h2>
-                
+            <div class="transactions-container">
+                <h2 class="transactions-header">Transacciones Recientes</h2>
                 <div class="transaction-item">
                     <div class="transaction-info">
-                        <h4>iPhone 13 Pro</h4>
-                        <p>Vendedor: Juan Pérez</p>
+                        <div class="transaction-title">iPhone 13 Pro</div>
+                        <div class="transaction-seller">Vendedor: Juan Pérez</div>
                     </div>
-                    <div class="transaction-status">
+                    <div class="transaction-details">
                         <div class="transaction-amount">$15,000 MXN</div>
-                        <span class="status-badge status-pending">Pendiente</span>
+                        <span class="transaction-status status-pending">Pendiente</span>
                     </div>
                 </div>
 
                 <div class="transaction-item">
                     <div class="transaction-info">
-                        <h4>MacBook Air M2</h4>
-                        <p>Vendedor: María García</p>
+                        <div class="transaction-title">MacBook Air M2</div>
+                        <div class="transaction-seller">Vendedor: María García</div>
                     </div>
-                    <div class="transaction-status">
+                    <div class="transaction-details">
                         <div class="transaction-amount">$25,000 MXN</div>
-                        <span class="status-badge status-completed">Completado</span>
+                        <span class="transaction-status status-completed">Completado</span>
                     </div>
                 </div>
 
                 <div class="transaction-item">
                     <div class="transaction-info">
-                        <h4>iPad Mini 6</h4>
-                        <p>Vendedor: Carlos López</p>
+                        <div class="transaction-title">iPad Mini 6</div>
+                        <div class="transaction-seller">Vendedor: Carlos López</div>
                     </div>
-                    <div class="transaction-status">
+                    <div class="transaction-details">
                         <div class="transaction-amount">$8,000 MXN</div>
-                        <span class="status-badge status-pending">Pendiente</span>
+                        <span class="transaction-status status-pending">Pendiente</span>
                     </div>
                 </div>
 
                 <div class="transaction-item">
                     <div class="transaction-info">
-                        <h4>AirPods Pro</h4>
-                        <p>Vendedor: Ana Martínez</p>
+                        <div class="transaction-title">AirPods Pro</div>
+                        <div class="transaction-seller">Vendedor: Ana Martínez</div>
                     </div>
-                    <div class="transaction-status">
+                    <div class="transaction-details">
                         <div class="transaction-amount">$3,500 MXN</div>
-                        <span class="status-badge status-cancelled">Cancelado</span>
+                        <span class="transaction-status status-cancelled">Cancelado</span>
                     </div>
                 </div>
             </div>
