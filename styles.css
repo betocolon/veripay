@@ -1,0 +1,8 @@
+/* Add any custom styles here */
+.hover\:bg-emerald-50:hover {
+    background-color: rgba(236, 253, 245, 1);
+}
+
+.hover\:bg-emerald-700:hover {
+    background-color: rgba(4, 120, 87, 1);
+}

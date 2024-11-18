@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeriPay - Pagos Seguros</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="min-h-screen bg-gray-50">
+        <!-- Navbar -->
+        <nav class="bg-white shadow-sm">
+            <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+                <div class="flex items-center">
+                    <i data-lucide="shield" class="text-emerald-600 h-8 w-8"></i>
+                    <span class="ml-2 text-2xl font-bold text-emerald-600">VeriPay</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" onclick="navigateTo('/')" class="text-gray-600 hover:text-emerald-600">Inicio</a>
+                    <a href="#" onclick="navigateTo('/login')" class="text-gray-600 hover:text-emerald-600">Iniciar Sesión</a>
+                    <a href="#" onclick="navigateTo('/register')" class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
+                        Registrarse
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div id="main-content">
+            <!-- Content will be dynamically inserted here -->
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-white border-t mt-16">
+            <div class="max-w-6xl mx-auto px-4 py-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h4 class="font-bold mb-4">VeriPay</h4>
+                        <div class="flex items-center">
+                            <i data-lucide="shield" class="text-emerald-600 h-6 w-6 mr-2"></i>
+                            <span class="text-gray-600">Pagos Seguros</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4">Legal</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-emerald-600">Términos y Condiciones</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-emerald-600">Política de Privacidad</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4">Soporte</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-emerald-600">Centro de Ayuda</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-emerald-600">Contacto</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4">Contacto</h4>
+                        <p class="text-gray-600">support@veripay.mx</p>
+                        <p class="text-gray-600">Tel: (55) 1234-5678</p>
+                    </div>
+                </div>
+                <div class="border-t mt-8 pt-8 text-center text-gray-600">
+                    <p>© 2024 VeriPay. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
