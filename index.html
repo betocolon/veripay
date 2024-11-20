@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -32,32 +31,6 @@
         body {
             line-height: 1.6;
             background-color: var(--background);
-        }
-
-        /* Common Button Styles */
-        .button {
-            background-color: var(--primary);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(5, 150, 105, 0.1);
-        }
-
-        .button:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-1px);
-        }
-
-        .button-outline {
-            background-color: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
         }
 
         /* Navigation Styles */
@@ -108,6 +81,35 @@
             transition: all 0.3s ease;
         }
 
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.875rem;
+            background-color: transparent;
+        }
+
+        .nav-btn.primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .nav-btn.primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .nav-btn.outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .nav-btn.outline:hover {
+            background-color: var(--background);
+        }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
@@ -133,98 +135,43 @@
             margin-right: auto;
         }
 
-        /* Features Section */
-        .features {
-            padding: 6rem 1rem;
-            background-color: white;
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .feature-card {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: var(--card-shadow);
+        .hero-btn {
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
             transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
         }
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+        .hero-btn.primary {
+            background-color: var(--primary);
+            color: white;
         }
 
-        /* Steps Section */
-        .steps {
-            padding: 6rem 1rem;
-            background-color: var(--background);
+        .hero-btn.primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
         }
 
-        .steps h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--text-primary);
-            margin-bottom: 3rem;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 1000;
-        }
-
-        .modal-content {
+        .hero-btn.outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
             background-color: white;
-            padding: 2.5rem;
-            border-radius: 1rem;
-            max-width: 500px;
-            margin: 4rem auto;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .features-grid, .steps-grid {
-                grid-template-columns: 1fr;
-            }
+        .hero-btn.outline:hover {
+            background-color: var(--background);
+            transform: translateY(-2px);
         }
-
-        /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animated {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-    </style>
+</style>
 </head>
 <body>
     <!-- Navigation -->
@@ -235,8 +182,8 @@
             </a>
             <div class="nav-links">
                 <a href="#como-funciona">¿Cómo Funciona?</a>
-                <button class="button button-outline" onclick="openModal('loginModal')">Iniciar Sesión</button>
-                <button class="button" onclick="openModal('registerModal')">Registrarse</button>
+                <button class="nav-btn outline" onclick="openModal('loginModal')">Iniciar Sesión</button>
+                <button class="nav-btn primary" onclick="openModal('registerModal')">Registrarse</button>
             </div>
         </div>
     </nav>
@@ -246,9 +193,13 @@
         <div class="container animated">
             <h1>Compra y Vende con Confianza</h1>
             <p>Protegemos tu dinero hasta que recibas exactamente lo que acordaste</p>
-            <div>
-                <button class="button" onclick="window.location.href='register.html?type=buyer'">Soy Comprador</button>
-                <button class="button button-outline" onclick="window.location.href='register.html?type=seller'">Soy Vendedor</button>
+            <div class="hero-buttons">
+                <button class="hero-btn primary" onclick="openModal('registerModal', 'buyer')">
+                    Soy Comprador
+                </button>
+                <button class="hero-btn outline" onclick="openModal('registerModal', 'seller')">
+                    Soy Vendedor
+                </button>
             </div>
         </div>
     </section>
@@ -281,28 +232,33 @@
         <div class="container">
             <h2>¿Cómo Funciona?</h2>
             <div class="steps-grid">
-                <div class="step-card">
+                <div class="step-card" onclick="activateStep(1)">
                     <div class="step-number">1</div>
+                    <div class="step-icon">🤝</div>
                     <h3>Acuerdo</h3>
                     <p>Define los términos con el vendedor</p>
                 </div>
-                <div class="step-card">
+                <div class="step-card" onclick="activateStep(2)">
                     <div class="step-number">2</div>
+                    <div class="step-icon">💳</div>
                     <h3>Depósito</h3>
                     <p>El comprador deposita el pago de forma segura</p>
                 </div>
-                <div class="step-card">
+                <div class="step-card" onclick="activateStep(3)">
                     <div class="step-number">3</div>
+                    <div class="step-icon">📦</div>
                     <h3>Entrega</h3>
                     <p>El vendedor envía el producto</p>
                 </div>
-                <div class="step-card">
+                <div class="step-card" onclick="activateStep(4)">
                     <div class="step-number">4</div>
+                    <div class="step-icon">✔️</div>
                     <h3>Confirmación</h3>
                     <p>El comprador verifica el producto</p>
                 </div>
-                <div class="step-card">
+                <div class="step-card" onclick="activateStep(5)">
                     <div class="step-number">5</div>
+                    <div class="step-icon">💸</div>
                     <h3>Pago</h3>
                     <p>Liberamos el pago al vendedor</p>
                 </div>
@@ -310,8 +266,196 @@
         </div>
     </section>
 
-    <!-- Authentication Modals -->
-<!-- Login Modal -->
+    <style>
+        /* Features Section Styles */
+        .features {
+            padding: 6rem 1rem;
+            background-color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 1rem;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            text-align: center;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        /* Steps Section Styles */
+        .steps {
+            padding: 6rem 1rem;
+            background-color: var(--background);
+            position: relative;
+        }
+
+        .steps h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 3rem;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2rem;
+            position: relative;
+        }
+
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 2rem;
+            left: 3rem;
+            right: 3rem;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary) 0%, var(--primary) 0%, var(--border) 0%, var(--border) 100%);
+            transition: all 0.5s ease;
+            z-index: 1;
+        }
+
+        .step-card {
+            position: relative;
+            z-index: 2;
+            background: white;
+            padding: 2rem 1rem;
+            border-radius: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--border);
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .step-card.active {
+            border-color: var(--primary);
+            background-color: #f0fdf4;
+        }
+
+        .step-number {
+            width: 3rem;
+            height: 3rem;
+            background: var(--background);
+            color: var(--text-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+            border: 2px solid var(--border);
+        }
+
+        .step-card.active .step-number {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .step-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .step-card.active .step-icon {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .step-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+        }
+
+        .step-card p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .steps-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .steps-grid::before {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+
+    <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -362,11 +506,12 @@
                 <div class="form-control">
                     <label class="form-label">Contraseña</label>
                     <input type="password" class="form-input" id="registerPassword" required
-                           placeholder="••••••••">
+                           placeholder="••••••••" minlength="8">
+                    <div class="help-text">Mínimo 8 caracteres</div>
                 </div>
                 <div class="form-control">
                     <label class="form-label">Tipo de Cuenta</label>
-                    <div class="button-group">
+                    <div class="role-buttons">
                         <button type="button" class="role-btn active" data-role="buyer" onclick="selectRole('buyer')">
                             🛒 Comprador
                         </button>
@@ -384,35 +529,292 @@
         </div>
     </div>
 
+    <style>
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            max-width: 400px;
+            margin: 4rem auto;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-close:hover {
+            background-color: var(--background);
+            color: var(--text-primary);
+        }
+
+        .form-control {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+
+        .role-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .role-btn {
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            background: white;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .role-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .form-footer {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            background-color: #fef2f2;
+        }
+
+        .help-text {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+    </style>
+
     <script>
-        // Modal Functions
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
+        // Handle Modal Functions
+        function openModal(modalId, role = null) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'block';
+            
+            if (role) {
+                selectRole(role);
+            }
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        // Handle Login
-        function handleLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            // In a real app, this would make an API call
-            if (email && password) {
-                // Redirect to appropriate dashboard based on user type
-                window.location.href = 'dashboard.html';
-            }
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'none';
         }
 
         // Close modal when clicking outside
         window.onclick = function(event) {
-            if (event.target.className === 'modal') {
+            if (event.target.classList.contains('modal')) {
                 event.target.style.display = 'none';
             }
         }
+
+        // Handle Role Selection
+        function selectRole(role) {
+            const buttons = document.querySelectorAll('.role-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.role === role) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Handle Login
+        async function handleLogin(event) {
+            event.preventDefault();
+            const form = event.target;
+            const submitBtn = form.querySelector('.submit-btn');
+            const errorDiv = document.getElementById('loginError');
+            
+            try {
+                submitBtn.classList.add('loading');
+                errorDiv.style.display = 'none';
+
+                // Get form data
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // Store user data and redirect
+                sessionStorage.setItem('isAuthenticated', 'true');
+                sessionStorage.setItem('userEmail', email);
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                errorDiv.textContent = 'Error al iniciar sesión. Por favor intente nuevamente.';
+                errorDiv.style.display = 'block';
+            } finally {
+                submitBtn.classList.remove('loading');
+            }
+        }
+
+        // Handle Registration
+        async function handleRegister(event) {
+            event.preventDefault();
+            const form = event.target;
+            const submitBtn = form.querySelector('.submit-btn');
+            const errorDiv = document.getElementById('registerError');
+            
+            try {
+                submitBtn.classList.add('loading');
+                errorDiv.style.display = 'none';
+
+                // Get form data
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const role = document.querySelector('.role-btn.active').dataset.role;
+
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // Store user data and redirect
+                sessionStorage.setItem('isAuthenticated', 'true');
+                sessionStorage.setItem('userName', name);
+                sessionStorage.setItem('userEmail', email);
+                sessionStorage.setItem('userRole', role);
+
+                window.location.href = role === 'seller' ? 'seller-dashboard.html' : 'dashboard.html';
+            } catch (error) {
+                errorDiv.textContent = 'Error al crear la cuenta. Por favor intente nuevamente.';
+                errorDiv.style.display = 'block';
+            } finally {
+                submitBtn.classList.remove('loading');
+            }
+        }
+
+        // Handle Steps Interaction
+        function activateStep(stepNumber) {
+            const steps = document.querySelectorAll('.step-card');
+            const progressBar = document.querySelector('.steps-grid::before');
+            
+            steps.forEach((step, index) => {
+                if (index < stepNumber) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+
+            // Update progress bar
+            const progress = ((stepNumber - 1) / (steps.length - 1)) * 100;
+            progressBar.style.background = `linear-gradient(to right, 
+                var(--primary) 0%, 
+                var(--primary) ${progress}%, 
+                var(--border) ${progress}%, 
+                var(--border) 100%)`;
+        }
+
+        // Initialize first step on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            activateStep(1);
+        });
     </script>
 </body>
 </html>
