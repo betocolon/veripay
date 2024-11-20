@@ -311,21 +311,75 @@
     </section>
 
     <!-- Authentication Modals -->
+<!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('loginModal')">&times;</span>
-            <h2>Iniciar Sesión</h2>
-            <form onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label>Correo Electrónico</label>
-                    <input type="email" id="loginEmail" required>
+            <div class="modal-header">
+                <h2 class="modal-title">Iniciar Sesión</h2>
+                <span class="modal-close" onclick="closeModal('loginModal')">&times;</span>
+            </div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-control">
+                    <label class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-input" id="loginEmail" required 
+                           placeholder="ejemplo@email.com">
                 </div>
-                <div class="form-group">
-                    <label>Contraseña</label>
-                    <input type="password" id="loginPassword" required>
+                <div class="form-control">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" class="form-input" id="loginPassword" required
+                           placeholder="••••••••">
                 </div>
-                <button type="submit" class="button">Iniciar Sesión</button>
-                <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                <button type="submit" class="submit-btn">
+                    <span>Iniciar Sesión</span>
+                    <div class="loading-spinner"></div>
+                </button>
+                <div class="form-footer">
+                    <a href="#" onclick="showForgotPassword(event)">¿Olvidaste tu contraseña?</a>
+                </div>
+                <div id="loginError" class="error-message" style="display: none;"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Crear Cuenta</h2>
+                <span class="modal-close" onclick="closeModal('registerModal')">&times;</span>
+            </div>
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-control">
+                    <label class="form-label">Nombre Completo</label>
+                    <input type="text" class="form-input" id="registerName" required 
+                           placeholder="Juan Pérez">
+                </div>
+                <div class="form-control">
+                    <label class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-input" id="registerEmail" required 
+                           placeholder="ejemplo@email.com">
+                </div>
+                <div class="form-control">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" class="form-input" id="registerPassword" required
+                           placeholder="••••••••">
+                </div>
+                <div class="form-control">
+                    <label class="form-label">Tipo de Cuenta</label>
+                    <div class="button-group">
+                        <button type="button" class="role-btn active" data-role="buyer" onclick="selectRole('buyer')">
+                            🛒 Comprador
+                        </button>
+                        <button type="button" class="role-btn" data-role="seller" onclick="selectRole('seller')">
+                            💼 Vendedor
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <span>Crear Cuenta</span>
+                    <div class="loading-spinner"></div>
+                </button>
+                <div id="registerError" class="error-message" style="display: none;"></div>
             </form>
         </div>
     </div>
