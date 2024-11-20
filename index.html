@@ -745,7 +745,7 @@
                 // Store user data and redirect
                 sessionStorage.setItem('isAuthenticated', 'true');
                 sessionStorage.setItem('userEmail', email);
-                window.location.href = 'dashboard.html';
+                window.location.href = 'buyer-dashboard.html';
             } catch (error) {
                 errorDiv.textContent = 'Error al iniciar sesión. Por favor intente nuevamente.';
                 errorDiv.style.display = 'block';
@@ -780,7 +780,7 @@
                 sessionStorage.setItem('userEmail', email);
                 sessionStorage.setItem('userRole', role);
 
-                window.location.href = role === 'seller' ? 'seller-dashboard.html' : 'dashboard.html';
+                window.location.href = role === 'seller' ? 'seller-dashboard.html' : 'buyer-dashboard.html';
             } catch (error) {
                 errorDiv.textContent = 'Error al crear la cuenta. Por favor intente nuevamente.';
                 errorDiv.style.display = 'block';
