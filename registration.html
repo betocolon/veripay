@@ -1,0 +1,161 @@
+import React, { useState } from 'react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Upload } from 'lucide-react';
+
+const RegistrationPage = () => {
+  const [selectedRole, setSelectedRole] = useState('buyer');
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // In a real app, this would handle registration
+    setShowSuccess(true);
+    setTimeout(() => window.location.href = '/dashboard.html', 2000);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="max-w-md mx-auto">
+        <div className="flex justify-center mb-8">
+          <a href="/" className="text-2xl font-bold text-emerald-600 flex items-center gap-2">
+            🔒 VeriPay
+          </a>
+        </div>
+
+        <Tabs defaultValue="register" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-4">
+            <TabsTrigger value="register">Registro</TabsTrigger>
+            <TabsTrigger value="login">Iniciar Sesión</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="register">
+            <Card>
+              <CardHeader>
+                <CardTitle>Crear Cuenta</CardTitle>
+                <CardDescription>
+                  Registra una cuenta nueva para comenzar a usar VeriPay
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit}>
+                  <div className="grid gap-4">
+                    <div className="grid gap-2">
+                      <Label htmlFor="name">Nombre Completo</Label>
+                      <Input id="name" placeholder="Juan Pérez" required />
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label htmlFor="email">Correo Electrónico</Label>
+                      <Input id="email" type="email" placeholder="juan@ejemplo.com" required />
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label htmlFor="password">Contraseña</Label>
+                      <Input id="password" type="password" required />
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label>Tipo de Cuenta</Label>
+                      <div className="flex gap-4">
+                        <Button 
+                          type="button"
+                          variant={selectedRole === 'buyer' ? 'default' : 'outline'}
+                          onClick={() => setSelectedRole('buyer')}
+                          className="flex-1"
+                        >
+                          Comprador
+                        </Button>
+                        <Button 
+                          type="button"
+                          variant={selectedRole === 'seller' ? 'default' : 'outline'}
+                          onClick={() => setSelectedRole('seller')}
+                          className="flex-1"
+                        >
+                          Vendedor
+                        </Button>
+                      </div>
+                    </div>
+
+                    {selectedRole === 'seller' && (
+                      <div className="grid gap-2">
+                        <Label>Documentos de Verificación</Label>
+                        <div className="border-2 border-dashed rounded-lg p-6 flex flex-col items-center gap-2">
+                          <Upload className="h-8 w-8 text-gray-400" />
+                          <p className="text-sm text-gray-600">
+                            Arrastra documentos o haz clic para seleccionar
+                          </p>
+                          <Input type="file" className="hidden" />
+                        </div>
+                      </div>
+                    )}
+
+                    <Button type="submit" className="w-full">
+                      Registrarse
+                    </Button>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="login">
+            <Card>
+              <CardHeader>
+                <CardTitle>Iniciar Sesión</CardTitle>
+                <CardDescription>
+                  Ingresa a tu cuenta de VeriPay
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit}>
+                  <div className="grid gap-4">
+                    <div className="grid gap-2">
+                      <Label htmlFor="login-email">Correo Electrónico</Label>
+                      <Input id="login-email" type="email" required />
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label htmlFor="login-password">Contraseña</Label>
+                      <Input id="login-password" type="password" required />
+                    </div>
+
+                    <Button type="submit" className="w-full">
+                      Iniciar Sesión
+                    </Button>
+                  </div>
+                </form>
+              </CardContent>
+              <CardFooter>
+                <Button variant="link" className="w-full">
+                  ¿Olvidaste tu contraseña?
+                </Button>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+        </Tabs>
+
+        {showSuccess && (
+          <Alert className="mt-4">
+            <AlertDescription>
+              Registro exitoso. Redirigiendo al panel de control...
+            </AlertDescription>
+          </Alert>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default RegistrationPage;
