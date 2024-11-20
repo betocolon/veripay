@@ -1,1 +1,877 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeriPay - Depositar Fondos</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Core Variables - Matching other pages */
+        :root {
+            --primary: #059669;
+            --primary-dark: #047857;
+            --secondary: #1a2238;
+            --background: #f8fafc;
+            --text-primary: #1a2238;
+            --text-secondary: #4b5563;
+            --border: #e5e7eb;
+            --success: #059669;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            min-height: 100vh;
+        }
+
+        /* Layout Styles */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar - Matching Dashboard */
+        .sidebar {
+            width: 280px;
+            background-color: var(--secondary);
+            color: white;
+            padding: 1.5rem;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            z-index: 50;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 2.5rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.875rem 1rem;
+            color: #e5e7eb;
+            text-decoration: none;
+            border-radius: 0.75rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-item:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .nav-item .icon {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+            background-color: var(--background);
+        }
+
+        /* Header Section */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-title {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        /* Payment Container */
+        .payment-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+            padding: 2rem;
+        }
+
+        /* Payment Summary */
+        .payment-summary {
+            background-color: var(--background);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: 600;
+        }
+
+        .summary-label {
+            color: var(--text-secondary);
+        }
+
+        .summary-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+</style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <a href="index.html" class="sidebar-logo">
+                🔒 VeriPay
+            </a>
+            <nav>
+                <a href="dashboard.html" class="nav-item">
+                    <span class="icon">📊</span>Panel Principal
+                </a>
+                <a href="create-agreement.html" class="nav-item">
+                    <span class="icon">✍️</span>Nuevo Acuerdo
+                </a>
+                <a href="active-agreements.html" class="nav-item">
+                    <span class="icon">📝</span>Acuerdos Activos
+                </a>
+                <a href="completed-agreements.html" class="nav-item">
+                    <span class="icon">✅</span>Historial
+                </a>
+                <a href="deposit-funds.html" class="nav-item active">
+                    <span class="icon">💰</span>Fondos
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <span class="icon">👤</span>Mi Perfil
+                </a>
+                <a href="#" class="nav-item" onclick="handleLogout()">
+                    <span class="icon">🚪</span>Cerrar Sesión
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header-container">
+                <h1 class="page-title">Depositar Fondos</h1>
+            </div>
+
+            <div class="payment-container">
+                <!-- Payment Summary -->
+                <div class="payment-summary">
+                    <h2 class="summary-title">Resumen de Pago</h2>
+                    <div class="summary-item">
+                        <span class="summary-label">Producto</span>
+                        <span class="summary-value" id="productName">iPhone 13 Pro</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Vendedor</span>
+                        <span class="summary-value" id="sellerName">María García</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Monto</span>
+                        <span class="summary-value" id="amount">$15,000 MXN</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Comisión (1.5%)</span>
+                        <span class="summary-value" id="fee">$225 MXN</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Total a Pagar</span>
+                        <span class="summary-value" id="total">$15,225 MXN</span>
+                    </div>
+                </div>
+
+              <!-- Payment Methods -->
+                <div class="payment-methods">
+                    <h2 class="section-title">Método de Pago</h2>
+                    
+                    <div class="payment-options">
+                        <div class="payment-option" onclick="selectPaymentMethod('card')">
+                            <div class="option-icon">💳</div>
+                            <div class="option-content">
+                                <h3>Tarjeta de Crédito/Débito</h3>
+                                <p>Visa, Mastercard, American Express</p>
+                            </div>
+                            <div class="option-radio"></div>
+                        </div>
+
+                        <div class="payment-option" onclick="selectPaymentMethod('spei')">
+                            <div class="option-icon">🏦</div>
+                            <div class="option-content">
+                                <h3>Transferencia SPEI</h3>
+                                <p>Pago desde tu banca en línea</p>
+                            </div>
+                            <div class="option-radio"></div>
+                        </div>
+
+                        <div class="payment-option" onclick="selectPaymentMethod('oxxo')">
+                            <div class="option-icon">🏪</div>
+                            <div class="option-content">
+                                <h3>Pago en OXXO</h3>
+                                <p>Genera tu referencia de pago</p>
+                            </div>
+                            <div class="option-radio"></div>
+                        </div>
+                    </div>
+
+                    <!-- Credit Card Form -->
+                    <div id="cardForm" class="payment-form">
+                        <form id="creditCardForm" onsubmit="handlePayment(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Nombre en la Tarjeta</label>
+                                    <input type="text" class="form-input" required
+                                           placeholder="Como aparece en la tarjeta">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Número de Tarjeta</label>
+                                    <div class="card-input-container">
+                                        <input type="text" class="form-input" id="cardNumber" required
+                                               placeholder="1234 5678 9012 3456" maxlength="19">
+                                        <div class="card-brands">
+                                            <img src="visa.png" alt="Visa" class="card-brand">
+                                            <img src="mastercard.png" alt="Mastercard" class="card-brand">
+                                            <img src="amex.png" alt="American Express" class="card-brand">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row two-columns">
+                                <div class="form-group">
+                                    <label class="form-label">Fecha de Expiración</label>
+                                    <input type="text" class="form-input" id="expiryDate" required
+                                           placeholder="MM/AA" maxlength="5">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">CVV</label>
+                                    <input type="password" class="form-input" id="cvv" required
+                                           placeholder="•••" maxlength="4">
+                                </div>
+                            </div>
+
+                            <div class="payment-agreement">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" required>
+                                    <span class="checkbox-text">
+                                        Acepto los <a href="#" class="link">términos y condiciones</a> 
+                                        y la <a href="#" class="link">política de privacidad</a>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="submit-btn">
+                                <span>Pagar $15,225 MXN</span>
+                                <div class="loading-spinner"></div>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- SPEI Transfer Form -->
+                    <div id="speiForm" class="payment-form" style="display: none;">
+                        <div class="bank-info">
+                            <h3>Información de Transferencia</h3>
+                            <div class="bank-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Banco</span>
+                                    <span class="detail-value">VeriPay México</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">CLABE</span>
+                                    <div class="copy-field">
+                                        <span class="detail-value">012345678901234567</span>
+                                        <button class="copy-btn" onclick="copyToClipboard('012345678901234567')">
+                                            📋 Copiar
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Referencia</span>
+                                    <div class="copy-field">
+                                        <span class="detail-value">VP2023111901</span>
+                                        <button class="copy-btn" onclick="copyToClipboard('VP2023111901')">
+                                            📋 Copiar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bank-instructions">
+                                <p>1. Copia la CLABE y la referencia</p>
+                                <p>2. Realiza la transferencia desde tu banca en línea</p>
+                                <p>3. El pago se reflejará en automático</p>
+                                <p class="warning">⚠️ Es importante incluir la referencia exacta</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- OXXO Payment Form -->
+                    <div id="oxxoForm" class="payment-form" style="display: none;">
+                        <div class="oxxo-info">
+                            <div class="oxxo-barcode">
+                                <img src="barcode.png" alt="Código de Barras" class="barcode-img">
+                                <button class="btn-outline" onclick="downloadBarcode()">
+                                    ⬇️ Descargar
+                                </button>
+                            </div>
+                            <div class="oxxo-reference">
+                                <span class="reference-label">Referencia de Pago:</span>
+                                <div class="copy-field">
+                                    <span class="reference-number">93789383898383</span>
+                                    <button class="copy-btn" onclick="copyToClipboard('93789383898383')">
+                                        📋 Copiar
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="oxxo-instructions">
+                                <p>1. Acude a tu OXXO más cercano</p>
+                                <p>2. Presenta el código de barras o referencia</p>
+                                <p>3. Realiza el pago en caja</p>
+                                <p>4. Conserva tu recibo</p>
+                                <p class="expiry">⏰ Referencia válida por 24 horas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        /* Payment Methods Styles */
+        .payment-methods {
+            margin-top: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-options {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option:hover {
+            border-color: var(--primary);
+            background-color: #f0fdf4;
+        }
+
+        .payment-option.selected {
+            border-color: var(--primary);
+            background-color: #f0fdf4;
+        }
+
+        .option-icon {
+            font-size: 1.5rem;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--background);
+            border-radius: 0.75rem;
+        }
+
+        .option-content {
+            flex: 1;
+        }
+
+        .option-content h3 {
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .option-content p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .option-radio {
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option.selected .option-radio {
+            border-color: var(--primary);
+        }
+
+        .payment-option.selected .option-radio::after {
+            content: '';
+            position: absolute;
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: var(--primary);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Form Styles */
+        .form-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+
+        .card-input-container {
+            position: relative;
+        }
+
+        .card-brands {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .card-brand {
+            width: 2rem;
+            height: auto;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .card-brand.active {
+            opacity: 1;
+        }
+</style>
+
+  <style>
+        /* Additional Payment Form Styles */
+        .bank-info, .oxxo-info {
+            background-color: var(--background);
+            padding: 2rem;
+            border-radius: 0.75rem;
+        }
+
+        .bank-details, .oxxo-reference {
+            margin: 1.5rem 0;
+        }
+
+        .detail-item {
+            margin-bottom: 1rem;
+        }
+
+        .detail-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-value {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-family: monospace;
+        }
+
+        .copy-field {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background-color: white;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .copy-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            background-color: white;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--background);
+            color: var(--text-primary);
+        }
+
+        .bank-instructions, .oxxo-instructions {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .bank-instructions p, .oxxo-instructions p {
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .warning {
+            color: var(--warning) !important;
+            font-weight: 500;
+        }
+
+        .expiry {
+            color: var(--error) !important;
+            font-weight: 500;
+        }
+
+        .oxxo-barcode {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .barcode-img {
+            max-width: 300px;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-top: 0.25rem;
+        }
+
+        .checkbox-text {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .link {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .submit-btn.loading .loading-spinner {
+            display: inline-block;
+        }
+
+        /* Success Message Styles */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .success-title {
+            font-size: 1.5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .success-text {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+
+            .copy-field {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .copy-btn {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <script>
+        // Handle Payment Method Selection
+        function selectPaymentMethod(method) {
+            // Remove selection from all options
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            // Hide all forms
+            document.querySelectorAll('.payment-form').forEach(form => {
+                form.style.display = 'none';
+            });
+
+            // Select clicked option and show corresponding form
+            const selectedOption = document.querySelector(`[onclick="selectPaymentMethod('${method}')"]`);
+            selectedOption.classList.add('selected');
+            document.getElementById(`${method}Form`).style.display = 'block';
+        }
+
+        // Format Credit Card Number
+        document.getElementById('cardNumber')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            let formattedValue = '';
+            
+            for(let i = 0; i < value.length; i++) {
+                if(i > 0 && i % 4 === 0) {
+                    formattedValue += ' ';
+                }
+                formattedValue += value[i];
+            }
+            
+            e.target.value = formattedValue;
+        });
+
+        // Format Expiry Date
+        document.getElementById('expiryDate')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if(value.length >= 2) {
+                value = value.slice(0,2) + '/' + value.slice(2,4);
+            }
+            e.target.value = value;
+        });
+
+        // Copy to Clipboard Function
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copiado';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+            }
+        }
+
+        // Handle Payment Submission
+        async function handlePayment(event) {
+            event.preventDefault();
+            const form = event.target;
+            const submitBtn = form.querySelector('.submit-btn');
+
+            try {
+                // Show loading state
+                submitBtn.classList.add('loading');
+                submitBtn.disabled = true;
+
+                // Simulate payment processing
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                // Hide payment form
+                form.style.display = 'none';
+
+                // Show success message
+                const successMessage = document.createElement('div');
+                successMessage.className = 'success-message';
+                successMessage.innerHTML = `
+                    <div class="success-icon">✅</div>
+                    <h2 class="success-title">¡Pago Exitoso!</h2>
+                    <p class="success-text">Tu pago ha sido procesado correctamente.</p>
+                    <button class="submit-btn" onclick="window.location.href='dashboard.html'">
+                        Volver al Panel
+                    </button>
+                `;
+                form.parentNode.appendChild(successMessage);
+                successMessage.style.display = 'block';
+
+            } catch (error) {
+                console.error('Payment error:', error);
+                alert('Error al procesar el pago. Por favor intenta nuevamente.');
+            } finally {
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Initialize first payment method
+        document.addEventListener('DOMContentLoaded', function() {
+            selectPaymentMethod('card');
+
+            // Load payment details from sessionStorage if available
+            const paymentDetails = JSON.parse(sessionStorage.getItem('paymentDetails'));
+            if (paymentDetails) {
+                document.getElementById('productName').textContent = paymentDetails.productName;
+                document.getElementById('sellerName').textContent = paymentDetails.sellerName;
+                document.getElementById('amount').textContent = paymentDetails.amount;
+                document.getElementById('fee').textContent = paymentDetails.fee;
+                document.getElementById('total').textContent = paymentDetails.total;
+            }
+        });
+
+        // Handle Logout
+        function handleLogout() {
+            sessionStorage.clear();
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
